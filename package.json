@@ -8,7 +8,7 @@
 	"peerDependencies": {
 		"typescript": "^5.0.0"
 	},
-	"workspaces": ["server/", "common/"],
+	"workspaces": ["server/", "common/", "client/"],
 	"scripts": {
 		"trunk": "trunk",
 		"lint": "trunk check",
