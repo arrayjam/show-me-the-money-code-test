@@ -1,5 +1,6 @@
 import { join } from "node:path";
 import { serve } from "bun";
+import { BalanceSheetSchema, parseBalanceSheet } from "../../common/src";
 
 const config = {
 	balanceSheetURL: "http://localhost:8091/api.xro/2.0/Reports/BalanceSheet",
@@ -32,5 +33,16 @@ console.log(`Listening on http://localhost:${config.port}`);
 async function fetchBalanceSheet() {
 	const balanceSheetResponse = await fetch(config.balanceSheetURL);
 	const balanceSheetJSON = await balanceSheetResponse.json();
-	return Response.json(balanceSheetJSON);
+
+	// Parse the Balance Sheet JSON with valibot so that we have typed runtime data
+	const parsedBalanceSheet = parseBalanceSheet(balanceSheetJSON);
+
+	// Now we can access this data in a typed way
+	const titles = parsedBalanceSheet.Reports.map((report) => {
+		return report.ReportTitles.join(", ");
+	});
+
+	console.log({ titles });
+
+	return Response.json(parsedBalanceSheet);
 }

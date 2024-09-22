@@ -1,0 +1,14 @@
+{
+	"name": "@show-me-the-money-code-test/server",
+	"type": "module",
+	"main": "src/index.ts",
+	"dependencies": {
+		"@show-me-the-money-code-test/common": "workspace:*"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	}
+}

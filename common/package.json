@@ -1,0 +1,14 @@
+{
+	"name": "@show-me-the-money-code-test/common",
+	"type": "module",
+	"main": "src/index.ts",
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"valibot": "^0.42.1"
+	}
+}
