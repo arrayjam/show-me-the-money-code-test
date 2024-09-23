@@ -1,8 +1,9 @@
 import { parseBalanceSheet } from "@show-me-the-money-code-test/common";
+import { fetch } from "bun";
 
-export async function fetchBalanceSheet(url: string) {
+export async function fetchBalanceSheet(url: string, fetchFn = fetch) {
 	try {
-		const balanceSheetResponse = await fetch(url);
+		const balanceSheetResponse = await fetchFn(url);
 		if (!balanceSheetResponse.ok) {
 			throw new Error(`HTTP Error. Status: ${balanceSheetResponse.status}`);
 		}
