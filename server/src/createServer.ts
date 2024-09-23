@@ -8,7 +8,9 @@ export type ServerConfig = {
 };
 
 export const config: ServerConfig = {
-	balanceSheetURL: "http://localhost:8091/api.xro/2.0/Reports/BalanceSheet",
+	balanceSheetURL:
+		process.env.BALANCE_SHEET_URL ||
+		"http://localhost:8091/api.xro/2.0/Reports/BalanceSheet",
 	port: 3000,
 };
 
@@ -40,8 +42,13 @@ export function createServer(
 }
 
 async function serveStaticFile(pathname: string) {
+	const clientDistPath = join(import.meta.dir, "../../client/dist");
+	if (pathname === "/") {
+		return new Response(Bun.file(join(clientDistPath, "index.html")));
+	}
+
 	// We serve static files from the built Vite project
-	const filePath = join(import.meta.dir, "../../frontend/dist", pathname);
+	const filePath = join(clientDistPath, pathname);
 	const file = Bun.file(filePath);
 	return new Response(file);
 }

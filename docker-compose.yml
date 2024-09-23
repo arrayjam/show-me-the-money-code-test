@@ -1,0 +1,23 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - BALANCE_SHEET_URL=http://show-me-the-money:3000/api.xro/2.0/Reports/BalanceSheet
+    networks:
+      - app-network
+
+  show-me-the-money:
+    image: jaypeng2015/show-me-the-money
+    ports:
+      - "8091:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
