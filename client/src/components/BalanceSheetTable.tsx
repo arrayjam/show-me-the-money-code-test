@@ -18,7 +18,6 @@ export type BalanceSheetTableProps = {
 };
 
 export const BalanceSheetTable: FC<BalanceSheetTableProps> = ({ report }) => {
-	console.log({ report });
 	return (
 		<div className="container m-auto">
 			<h1 className="text-center text-3xl font-bold my-4">
@@ -97,7 +96,7 @@ const Row = ({ row }: { row: BalanceSheetRow }) => {
 						cellClassNames,
 						cellIndex === 0 && "text-blue-200",
 						cellIndex > 0 && numberClassNames,
-						cellIndex > 0 && cell.Value.substring(0, 1) === "-"
+						cellIndex > 0 && stringValueIsNegative(cell.Value)
 							? "text-red-300"
 							: "text-yellow-300",
 					)}
@@ -120,7 +119,7 @@ const SummaryRow = ({ row }: { row: BalanceSheetSummaryRow }) => {
 						cellClassNames,
 						"font-extrabold pb-8",
 						cellIndex > 0 && numberClassNames,
-						cell.Value.substring(0, 1) === "-" && "text-red-500",
+						stringValueIsNegative(cell.Value) && "text-red-500",
 					)}
 				>
 					{cell.Value}
@@ -129,3 +128,7 @@ const SummaryRow = ({ row }: { row: BalanceSheetSummaryRow }) => {
 		</tr>
 	);
 };
+
+function stringValueIsNegative(value: string) {
+	return value.substring(0, 1) === "-";
+}

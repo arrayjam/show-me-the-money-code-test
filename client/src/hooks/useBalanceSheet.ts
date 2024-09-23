@@ -5,14 +5,18 @@ import {
 import { useEffect, useState } from "react";
 import { fetchBalanceSheet } from "../services/balanceSheetService";
 
-export function useBalanceSheet() {
+export function useBalanceSheet(
+	fetchers: {
+		fetchBalanceSheet: () => Promise<BalanceSheet>;
+	} = { fetchBalanceSheet: fetchBalanceSheet },
+) {
 	const [balanceSheet, setBalanceSheet] = useState<BalanceSheet | null>(null);
 	const [parsingError, setParsingError] = useState<Error | null>(null);
 
 	useEffect(() => {
 		async function loadBalanceSheet() {
 			try {
-				const balanceSheetJSON = await fetchBalanceSheet();
+				const balanceSheetJSON = await fetchers.fetchBalanceSheet();
 				const parsedBalanceSheet = parseBalanceSheet(balanceSheetJSON);
 				setBalanceSheet(parsedBalanceSheet);
 			} catch (error) {
@@ -20,7 +24,7 @@ export function useBalanceSheet() {
 			}
 		}
 		loadBalanceSheet();
-	}, []);
+	}, [fetchers.fetchBalanceSheet]);
 
 	return { balanceSheet, parsingError };
 }

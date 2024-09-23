@@ -1,6 +1,7 @@
 import { join } from "node:path";
-import { type Serve, type Server, serve } from "bun";
-import { BalanceSheetSchema, parseBalanceSheet } from "../../common/src";
+import type { BalanceSheet } from "@show-me-the-money-code-test/common";
+import { type Serve, serve } from "bun";
+import { fetchBalanceSheet } from "./fetchBalanceSheet";
 
 type ServerConfig = {
 	balanceSheetURL: string;
@@ -12,19 +13,24 @@ const config: ServerConfig = {
 	port: 3000,
 };
 
-serve(createServer(config));
+serve(createServer(config, { balanceSheetFetchFn: fetchBalanceSheet }));
 
 console.log(`Listening on http://localhost:${config.port}`);
 
-export function createServer(config: ServerConfig): Serve {
+export function createServer(
+	config: ServerConfig,
+	fetchers: { balanceSheetFetchFn: (url: string) => Promise<BalanceSheet> },
+): Serve {
 	return {
 		port: config.port,
-		fetch(req) {
+		async fetch(req) {
 			const pathname = new URL(req.url).pathname;
 
 			// API Routes
 			if (pathname === "/api/balance-sheet") {
-				return fetchBalanceSheet(config.balanceSheetURL);
+				return Response.json(
+					await fetchers.balanceSheetFetchFn(config.balanceSheetURL),
+				);
 			}
 
 			// Serving frontend files in production with built Vite
@@ -36,23 +42,6 @@ export function createServer(config: ServerConfig): Serve {
 			return new Response("Not found", { status: 404 });
 		},
 	};
-}
-
-async function fetchBalanceSheet(url: string) {
-	const balanceSheetResponse = await fetch(url);
-	const balanceSheetJSON = await balanceSheetResponse.json();
-
-	// Parse the Balance Sheet JSON with valibot so that we have typed runtime data
-	const parsedBalanceSheet = parseBalanceSheet(balanceSheetJSON);
-
-	// // Now we can access this data in a typed way, e.g.
-	// const titles = parsedBalanceSheet.Reports.map((report) => {
-	// 	return report.ReportTitles.join(", ");
-	// });
-
-	// console.log({ titles });
-
-	return Response.json(parsedBalanceSheet);
 }
 
 async function serveStaticFile(pathname: string) {
