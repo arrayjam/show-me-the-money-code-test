@@ -3,7 +3,8 @@
 	"type": "module",
 	"main": "src/index.ts",
 	"dependencies": {
-		"@show-me-the-money-code-test/common": "workspace:*"
+		"@show-me-the-money-code-test/common": "workspace:*",
+		"bun-bagel": "^1.1.0"
 	},
 	"devDependencies": {
 		"@types/bun": "latest"

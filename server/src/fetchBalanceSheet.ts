@@ -1,5 +1,4 @@
 import { parseBalanceSheet } from "@show-me-the-money-code-test/common";
-import { fetch } from "bun";
 
 export async function fetchBalanceSheet(url: string, fetchFn = fetch) {
 	try {

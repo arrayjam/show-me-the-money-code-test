@@ -3,7 +3,11 @@
 	"type": "module",
 	"devDependencies": {
 		"@trunkio/launcher": "^1.3.2",
-		"@types/bun": "latest"
+		"@types/bun": "latest",
+		"@happy-dom/global-registrator": "^15.7.4",
+		"@testing-library/dom": "^10.4.0",
+		"@testing-library/jest-dom": "^6.5.0",
+		"@testing-library/react": "^16.0.1"
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"
@@ -13,6 +17,7 @@
 		"dev": "bun --filter '*' dev",
 		"trunk": "trunk",
 		"lint": "trunk check",
-		"fmt": "trunk fmt"
+		"fmt": "trunk fmt",
+		"test": "bun test"
 	}
 }

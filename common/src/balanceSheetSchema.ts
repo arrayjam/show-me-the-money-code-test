@@ -90,7 +90,7 @@ export function parseBalanceSheet(inputJSON: unknown): BalanceSheet {
 		return result.output;
 	}
 
-	// Show the path of the parse error
-	console.log(result.issues[0].path?.map((p) => p.key));
+	// The following shows the path of the parse error
+	// console.log(result.issues[0].path?.map((p) => p.key));
 	throw new Error("Failed to parse Balance Sheet Schema");
 }
