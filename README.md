@@ -4,10 +4,9 @@ This project is a XERO Balance Sheet viewer application built with React, TypeSc
 
 ## Getting Started
 
-### Prerequisites
+### Running Prerequisites
 
 - [Docker](https://www.docker.com/get-started)
-- [Bun](https://bun.sh/) (v1.0.0 or later)
 
 ### Running with Docker
 
@@ -28,9 +27,11 @@ docker-compose up --build
 
 ### Local Development
 
-1. Install dependencies:
+
+1. Install [bun](https://bun.sh/) and dependencies:
 
 ```
+curl -fsSL https://bun.sh/install | bash
 bun install
 ```
 
