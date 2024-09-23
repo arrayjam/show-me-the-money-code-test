@@ -41,7 +41,13 @@ bun install
 bun run dev
 ```
 
-3. Access the application at http://localhost:3939
+3. Run the demo XERO server:
+
+```
+docker run -p 8091:3000 jaypeng2015/show-me-the-money
+```
+
+4. Access the application at http://localhost:3939
 
 ### Running Tests
 
