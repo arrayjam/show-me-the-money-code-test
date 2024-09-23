@@ -35,12 +35,24 @@ const RowTypeSummaryRow = v.strictObject({
 		}),
 	),
 });
+
+// Rows in Sections can contain Rows or Summary Rows
+const SectionContentsRow = v.union([RowTypeRow, RowTypeSummaryRow]);
+
 const RowTypeSection = v.strictObject({
 	RowType: v.literal("Section"),
 	Title: v.string(),
-	// Rows in Sections can contain Rows or Summary Rows
-	Rows: v.array(v.union([RowTypeRow, RowTypeSummaryRow])),
+	Rows: v.array(SectionContentsRow),
 });
+
+const RowTypeAll = v.union([
+	RowTypeHeader,
+	RowTypeSection,
+	RowTypeRow,
+	RowTypeSummaryRow,
+]);
+
+const TopLevelRow = v.union([RowTypeHeader, RowTypeSection]);
 
 export const BalanceSheetSchema = v.strictObject({
 	Status: v.literal("OK"),
@@ -61,12 +73,21 @@ export const BalanceSheetSchema = v.strictObject({
 			),
 
 			// Balance Sheets can contain Headers and Sections
-			Rows: v.array(v.union([RowTypeHeader, RowTypeSection])),
+			Rows: v.array(TopLevelRow),
 		}),
 	),
 });
 
 export type BalanceSheet = v.InferOutput<typeof BalanceSheetSchema>;
+export type BalanceSheetRowAll = v.InferOutput<typeof RowTypeAll>;
+export type BalanceSheetTopLevelRow = v.InferOutput<typeof TopLevelRow>;
+export type BalanceSheetHeaderRow = v.InferOutput<typeof RowTypeHeader>;
+export type BalanceSheetSectionRow = v.InferOutput<typeof RowTypeSection>;
+export type BalanceSheetSectionRowContents = v.InferOutput<
+	typeof SectionContentsRow
+>;
+export type BalanceSheetRow = v.InferOutput<typeof RowTypeRow>;
+export type BalanceSheetSummaryRow = v.InferOutput<typeof RowTypeSummaryRow>;
 
 export function parseBalanceSheet(inputJSON: unknown): BalanceSheet {
 	const result = v.safeParse(BalanceSheetSchema, inputJSON, {
