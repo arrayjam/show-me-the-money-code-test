@@ -19,6 +19,10 @@ lint:
   disabled:
     - prettier
   enabled:
+    - hadolint@2.12.0
+    - markdownlint@0.41.0
+    - svgo@3.3.2
+    - taplo@0.9.3
     - biome@1.9.2
     - checkov@3.2.255
     - git-diff-check

@@ -12,47 +12,54 @@ This project is a XERO Balance Sheet viewer application built with React, TypeSc
 
 1. Clone the repository
 
-```
+```sh
 git clone https://github.com/arrayjam/show-me-the-money-code-test.git
 cd show-me-the-money-code-test
 ```
 
 2. Build and run the Docker containers (includes the dummy XERO endpoint):
 
-```
+```sh
 docker-compose up --build
 ```
 
-3. Access the application at http://localhost:3000
+3. Access the application at <http://localhost:3000>
 
 ### Local Development
 
 
 1. Install [bun](https://bun.sh/) and dependencies:
 
-```
+```sh
 curl -fsSL https://bun.sh/install | bash
 bun install
 ```
 
 2. Start the development server:
 
-```
+```sh
 bun run dev
 ```
 
 3. Run the demo XERO server:
 
-```
+```sh
 docker run -p 8091:3000 jaypeng2015/show-me-the-money
 ```
 
-4. Access the application at http://localhost:3939
+4. Access the application at <http://localhost:3939>
 
 ### Running Tests
 
-```
+```sh
 bun test
+```
+
+### Running linting and formatting
+
+```sh
+trunk fmt --all
+trunk check --all
 ```
 
 ## Project Structure
