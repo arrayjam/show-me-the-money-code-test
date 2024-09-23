@@ -45,41 +45,34 @@ const RowTypeSection = v.strictObject({
 	Rows: v.array(SectionContentsRow),
 });
 
-const RowTypeAll = v.union([
-	RowTypeHeader,
-	RowTypeSection,
-	RowTypeRow,
-	RowTypeSummaryRow,
-]);
-
 const TopLevelRow = v.union([RowTypeHeader, RowTypeSection]);
+
+const BalanceSheetReport = v.strictObject({
+	ReportID: v.string(),
+	ReportName: v.string(),
+	ReportType: v.literal("BalanceSheet"),
+	ReportTitles: v.array(v.string()),
+	ReportDate: v.string(),
+	UpdatedDateUTC: v.string(),
+	Fields: v.array(
+		v.strictObject({
+			FieldID: v.string(),
+			Description: v.string(),
+			Value: v.string(),
+		}),
+	),
+
+	// Balance Sheets can contain Headers and Sections
+	Rows: v.array(TopLevelRow),
+});
 
 export const BalanceSheetSchema = v.strictObject({
 	Status: v.literal("OK"),
-	Reports: v.array(
-		v.strictObject({
-			ReportID: v.string(),
-			ReportName: v.string(),
-			ReportType: v.literal("BalanceSheet"),
-			ReportTitles: v.array(v.string()),
-			ReportDate: v.string(),
-			UpdatedDateUTC: v.string(),
-			Fields: v.array(
-				v.strictObject({
-					FieldID: v.string(),
-					Description: v.string(),
-					Value: v.string(),
-				}),
-			),
-
-			// Balance Sheets can contain Headers and Sections
-			Rows: v.array(TopLevelRow),
-		}),
-	),
+	Reports: v.array(BalanceSheetReport),
 });
 
 export type BalanceSheet = v.InferOutput<typeof BalanceSheetSchema>;
-export type BalanceSheetRowAll = v.InferOutput<typeof RowTypeAll>;
+export type BalanceSheetReport = v.InferOutput<typeof BalanceSheetReport>;
 export type BalanceSheetTopLevelRow = v.InferOutput<typeof TopLevelRow>;
 export type BalanceSheetHeaderRow = v.InferOutput<typeof RowTypeHeader>;
 export type BalanceSheetSectionRow = v.InferOutput<typeof RowTypeSection>;
