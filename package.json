@@ -10,6 +10,7 @@
 	},
 	"workspaces": ["server/", "common/", "client/"],
 	"scripts": {
+		"dev": "bun --filter '*' dev",
 		"trunk": "trunk",
 		"lint": "trunk check",
 		"fmt": "trunk fmt"
