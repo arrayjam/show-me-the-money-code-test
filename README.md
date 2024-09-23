@@ -13,7 +13,7 @@ This project is a XERO Balance Sheet viewer application built with React, TypeSc
 1. Clone the repository
 
 ```
-git clone https://github.com/slava-class/show-me-the-money-code-test.git
+git clone https://github.com/arrayjam/show-me-the-money-code-test.git
 cd show-me-the-money-code-test
 ```
 
